@@ -14,12 +14,12 @@
 	function handleClick() {
 		openWindow
 			? window.open(href, 'targetWindow', 'width=500, height=500')
-			: false
+			: (window.location.href = href)
 	}
 </script>
 
+<!-- svelte-ignore a11y-missing-attribute -->
 <a
-	{href}
 	aria-label={ariaLabel}
 	class:color={light}
 	class:size={small}
