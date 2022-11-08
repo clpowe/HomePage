@@ -15,7 +15,19 @@
 		link: string
 	}
 
-	export let data = {} as Hero
+	export let data = {
+		pretext: '',
+		maintext: '',
+		items: '',
+		subtext: '',
+		code: '',
+		img: '',
+		imgXLDesktop: '',
+		imgDesktop: '',
+		imgTablet: '',
+		ariaLabel: '',
+		link: ''
+	} as Hero
 </script>
 
 <section class="Hero container w-full relative ">

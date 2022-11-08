@@ -4,6 +4,7 @@
 	type Data = {
 		image: string
 		eyebrow: string
+
 		headline: string
 		headlineSuperScript: string
 		details: string
@@ -14,7 +15,19 @@
 		detailsariaLabel: string
 	}
 
-	export let data = {} as Data
+	export let data = {
+		image: '',
+		eyebrow: '',
+
+		headline: '',
+		headlineSuperScript: '',
+		details: '',
+		link: '',
+		linkText: '',
+		ariaLabel: '',
+		detailsLink: '',
+		detailsariaLabel: ''
+	} as Data
 </script>
 
 <section>
@@ -202,26 +215,28 @@
 				</g>
 			</g>
 		</svg>
-		<div class="main">
-			<p class="eyebrow">{data.eyebrow}</p>
-			<h2 class="maintext">
-				{data.headline}<sup>{data.headlineSuperScript}</sup>
-			</h2>
-		</div>
-		<div class=" hotspot-image hotspot-v2-container ">
+		<div class="wrapper">
+			<div class="main">
+				<p class="eyebrow">{data.eyebrow}</p>
+				<h2 class="maintext">
+					{data.headline}<sup>{data.headlineSuperScript}</sup>
+				</h2>
+			</div>
+
 			<p class="legalText">
 				{data.details}
 				<a href={data.detailsLink} aria-label={data.detailsariaLabel}
 					>Learn More</a
 				>
 			</p>
+
+			<base-link
+				finance={true}
+				text={data.linkText}
+				href={data.link}
+				ariaLabel={data.ariaLabel}
+			/>
 		</div>
-		<base-link
-			finance={true}
-			text={data.linkText}
-			href={data.link}
-			ariaLabel={data.ariaLabel}
-		/>
 	</article>
 </section>
 
@@ -284,16 +299,17 @@
 	}
 
 	article {
-		max-width: 1024px;
-		display: block;
-		flex-direction: column;
+		display: flex;
+		flex-direction: row-reverse;
 		margin-inline: auto;
 		gap: 1rem;
+		justify-content: center;
 	}
 	svg {
-		height: auto;
-		width: 100px;
+		height: 60px;
+		width: auto;
 	}
+
 	.eyebrow {
 		font-family: 'Open Sans';
 		font-style: normal;
@@ -323,6 +339,12 @@
 		line-height: 16px;
 		letter-spacing: 0.32px;
 		text-transform: capitalize;
+		flex: 1;
+	}
+
+	.main {
+		display: grid;
+		gap: 0.25rem;
 	}
 
 	base-link {
@@ -330,8 +352,12 @@
 	}
 
 	@media (min-width: 768px) {
+		article {
+			display: flex;
+			flex-direction: row;
+		}
 		svg {
-			height: 60px;
+			height: 100px;
 			width: auto;
 			align-self: center;
 		}
@@ -339,13 +365,14 @@
 
 	@media (min-width: 1024px) {
 		article {
-			display: grid;
-			justify-content: stretch;
-			grid-template-columns: 1fr auto auto auto;
+			display: flex;
+			flex-direction: row;
 		}
 
-		.main {
-			align-self: center;
+		.wrapper {
+			display: flex;
+			gap: 1rem;
+			align-items: center;
 		}
 	}
 </style>
