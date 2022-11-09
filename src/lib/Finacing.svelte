@@ -4,11 +4,11 @@
 	type Data = {
 		image: string
 		eyebrow: string
-
 		headline: string
 		headlineSuperScript: string
 		details: string
-		link: string
+		mobilelink: string
+		desktoplink: string
 		linkText: string
 		ariaLabel: string
 		detailsLink: string
@@ -18,21 +18,26 @@
 	export let data = {
 		image: '',
 		eyebrow: '',
-
 		headline: '',
 		headlineSuperScript: '',
 		details: '',
-		link: '',
+		mobilelink: '',
+		desktoplink: '',
 		linkText: '',
 		ariaLabel: '',
 		detailsLink: '',
 		detailsariaLabel: ''
 	} as Data
+
+	function handleClick(href) {
+		window.open(href, 'targetWindow', 'width=500, height=500')
+	}
 </script>
 
 <section>
 	<article class="[ hotspot-image hotspot-v2-container ]">
 		<svg
+			class="card"
 			version="1.2"
 			xmlns="http://www.w3.org/2000/svg"
 			xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -225,43 +230,83 @@
 
 			<p class="legalText">
 				{data.details}
-				<a href={data.detailsLink} aria-label={data.detailsariaLabel}
-					>Learn More</a
+				<a
+					class="link"
+					href={data.detailsLink}
+					aria-label={data.detailsariaLabel}>Learn More</a
 				>
 			</p>
 
-			<base-link
-				finance={true}
-				text={data.linkText}
-				href={data.link}
-				ariaLabel={data.ariaLabel}
-			/>
+			<div class="mobile">
+				<!-- svelte-ignore a11y-missing-attribute -->
+				<a
+					class="finance-dk2-pq"
+					aria-label={data.ariaLabel}
+					on:click={handleClick(data.mobilelink)}
+					>{data.linkText}
+					<svg
+						version="1.2"
+						xmlns="http://www.w3.org/2000/svg"
+						xmlns:xlink="http://www.w3.org/1999/xlink"
+						overflow="visible"
+						preserveAspectRatio="none"
+						viewBox="0 0 26 26"
+						width="24"
+						height="24"
+						fill="inherit"
+					>
+						<g transform="translate(1, 1)">
+							<path
+								fill="inherit"
+								d="m10.8788 17.657-1.41396-1.414 4.24196-4.243-4.24196-4.24298 1.41396-1.414 5.656 5.65698z"
+								vector-effect="non-scaling-stroke"
+							/>
+						</g>
+					</svg>
+				</a>
+			</div>
+			<div class="desktop">
+				<!-- svelte-ignore a11y-missing-attribute -->
+				<a
+					class="finance-dk2-pq"
+					aria-label={data.ariaLabel}
+					on:click={handleClick(data.desktoplink)}
+					>{data.linkText}
+					<svg
+						class="[ self-center ]"
+						version="1.2"
+						xmlns="http://www.w3.org/2000/svg"
+						xmlns:xlink="http://www.w3.org/1999/xlink"
+						overflow="visible"
+						preserveAspectRatio="none"
+						viewBox="0 0 26 26"
+						width="24"
+						height="24"
+						fill="inherit"
+					>
+						<g transform="translate(1, 1)">
+							<path
+								fill="inherit"
+								d="m10.8788 17.657-1.41396-1.414 4.24196-4.243-4.24196-4.24298 1.41396-1.414 5.656 5.65698z"
+								vector-effect="non-scaling-stroke"
+							/>
+						</g>
+					</svg>
+				</a>
+			</div>
 		</div>
 	</article>
 </section>
 
 <style>
-	html {
-		box-sizing: border-box;
-		font-size: 16px;
-	}
-
 	*,
 	*:before,
 	*:after {
 		box-sizing: inherit;
 	}
 
-	body,
-	h1,
 	h2,
-	h3,
-	h4,
-	h5,
-	h6,
-	p,
-	ol,
-	ul {
+	p {
 		margin: 0;
 		padding: 0;
 		font-weight: normal;
@@ -277,16 +322,22 @@
 		height: auto;
 	}
 
-	a {
+	.link {
 		all: unset;
 		cursor: pointer;
 		font-weight: 700;
 	}
 
-	a:hover {
+	.link:hover {
 		text-decoration: underline;
 	}
 
+	.mobile {
+		display: block;
+	}
+	.desktop {
+		display: none;
+	}
 	section {
 		font-family: 'Open Sans', sans-serif;
 		max-width: 1440px;
@@ -305,7 +356,7 @@
 		gap: 1rem;
 		justify-content: center;
 	}
-	svg {
+	.card {
 		height: 60px;
 		width: auto;
 	}
@@ -356,10 +407,17 @@
 			display: flex;
 			flex-direction: row;
 		}
-		svg {
+		.card {
 			height: 100px;
 			width: auto;
 			align-self: center;
+		}
+
+		.mobile {
+			display: none;
+		}
+		.desktop {
+			display: block;
 		}
 	}
 
@@ -374,5 +432,54 @@
 			gap: 1rem;
 			align-items: center;
 		}
+	}
+
+	*,
+	*:before,
+	*:after {
+		box-sizing: inherit;
+	}
+
+	:where(:not(dialog)) {
+		margin: 0;
+	}
+
+	:where(a):where(:not(:hover)) {
+		text-decoration: inherit;
+	}
+
+	:where(a[href]):visited {
+		color: var(--link-visited);
+	}
+
+	a {
+		font-family: 'Open Sans', sans-serif;
+		color: #000;
+		justify-content: start;
+		text-decoration: none;
+		letter-spacing: 3px;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		text-transform: uppercase;
+		letter-spacing: 1.2px;
+		background-color: transparent;
+	}
+
+	a:hover {
+		color: var(--gray-6);
+	}
+
+	.size {
+		font-size: 0.75rem;
+	}
+	.color {
+		color: #fff;
+		fill: #fff;
+	}
+	.color:hover {
+		color: var(--gray-1);
+		fill: var(--gray-1);
 	}
 </style>
